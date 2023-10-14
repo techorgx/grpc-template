@@ -1,0 +1,8 @@
+#!/bin/sh
+
+CP="/Users/Aman_Rajput/.m2/repository/io/grpc/protoc-gen-grpc-kotlin/1.4.0/protoc-gen-grpc-kotlin-1.4.0-jdk8.jar"
+ARGS=""
+JVMARGS=""
+
+"/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home/bin/java" $JVMARGS -cp $CP io.grpc.kotlin.generator.GeneratorRunner $ARGS
+
