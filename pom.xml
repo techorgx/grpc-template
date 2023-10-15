@@ -6,13 +6,12 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.1.1</version>
-        <relativePath/>
     </parent>
 
     <groupId>com.techorgx.api</groupId>
     <artifactId>example-service</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.1</version>
+    <version>1.0</version>
     <name>example-service</name>
     <description>description</description>
 
@@ -20,7 +19,6 @@
     <modules>
         <module>example-api-protos</module>
         <module>grpc</module>
-        <!--      Add modules here-->
     </modules>
 
     <profiles>
@@ -38,7 +36,7 @@
     </profiles>
 
     <properties>
-        <main.class>com.techorgx.api.Application</main.class>
+        <main.basedir>${project.basedir}</main.basedir>
         <java.version>17</java.version>
         <kotlin.version>1.8.0</kotlin.version>
         <kotlinx.coroutines.version>1.7.3</kotlinx.coroutines.version>
@@ -50,6 +48,7 @@
         <bson.version>2.3</bson.version>
         <junit.version>4.13</junit.version>
         <lombok.version>1.18.26</lombok.version>
+        <javax-annotation-api.version>1.3.2</javax-annotation-api.version>
         <protobuf-java-util.version>3.21.5</protobuf-java-util.version>
         <bson.version>2.3</bson.version>
         <io-github-lognet.version>5.1.5</io-github-lognet.version>
@@ -57,7 +56,6 @@
 <!--     Repackaging-->
         <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
         <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
-        <resource.delimiter>@</resource.delimiter>
 <!--     Jwt auth-->
         <fusionauth-jwt.version>5.3.0</fusionauth-jwt.version>
     </properties>
@@ -92,7 +90,7 @@
         <dependency>
             <groupId>javax.annotation</groupId>
             <artifactId>javax.annotation-api</artifactId>
-            <version>1.3.2</version>
+            <version>${javax-annotation-api.version}</version>
         </dependency>
 
         <!--    Grpc dependencies-->
@@ -122,6 +120,11 @@
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-kotlin</artifactId>
             <version>${protobuf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java-util</artifactId>
+            <version>${protobuf-java-util.version}</version>
         </dependency>
 
         <!--    Server for grpc, shaded-->
@@ -189,26 +192,6 @@
 
     <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
-
-        <resources>
-            <resource>
-                <filtering>true</filtering>
-                <directory>${basedir}/src/main/resources</directory>
-                <includes>
-                    <include>**/application*.yml</include>
-                    <include>**/application*.yaml</include>
-                    <include>**/application*.properties</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>${basedir}/src/main/resources</directory>
-                <excludes>
-                    <exclude>**/application*.yml</exclude>
-                    <exclude>**/application*.yaml</exclude>
-                    <exclude>**/application*.properties</exclude>
-                </excludes>
-            </resource>
-        </resources>
 
         <!--    This is used to detect the operating system (OS) and architecture on which the
                 Maven build is running-->
@@ -335,6 +318,14 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
             </plugin>
         </plugins>
     </build>
